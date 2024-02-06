@@ -1,0 +1,6 @@
+framework module Pods_Everent {
+  umbrella header "Pods-Everent-umbrella.h"
+
+  export *
+  module * { export * }
+}

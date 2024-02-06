@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72254D002B72D95D006B3CE2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72254CFF2B72D95D006B3CE2 /* GoogleService-Info.plist */; };
 		72AAE8042B72BBAF0017D217 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8032B72BBAF0017D217 /* AppDelegate.swift */; };
 		72AAE8062B72BBAF0017D217 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8052B72BBAF0017D217 /* SceneDelegate.swift */; };
 		72AAE8082B72BBAF0017D217 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8072B72BBAF0017D217 /* HomeViewController.swift */; };
@@ -27,9 +28,11 @@
 		72AAE8372B72BE880017D217 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8362B72BE880017D217 /* SearchResultViewController.swift */; };
 		72AAE8392B72BEA60017D217 /* PostEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8382B72BEA60017D217 /* PostEditorViewController.swift */; };
 		72AAE83B2B72BF460017D217 /* PublishPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE83A2B72BF460017D217 /* PublishPostViewController.swift */; };
+		D1A246ED1E618A2B0B61424D /* Pods_Everent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F00D5AAB98C30DB724720710 /* Pods_Everent.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		72254CFF2B72D95D006B3CE2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		72AAE8002B72BBAF0017D217 /* Everent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Everent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72AAE8032B72BBAF0017D217 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		72AAE8052B72BBAF0017D217 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +55,9 @@
 		72AAE8362B72BE880017D217 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		72AAE8382B72BEA60017D217 /* PostEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEditorViewController.swift; sourceTree = "<group>"; };
 		72AAE83A2B72BF460017D217 /* PublishPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishPostViewController.swift; sourceTree = "<group>"; };
+		A4FA3C10C4C63B5842C24D1F /* Pods-Everent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Everent.release.xcconfig"; path = "Target Support Files/Pods-Everent/Pods-Everent.release.xcconfig"; sourceTree = "<group>"; };
+		AA97A5AFA5F7E3B1C78B66EA /* Pods-Everent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Everent.debug.xcconfig"; path = "Target Support Files/Pods-Everent/Pods-Everent.debug.xcconfig"; sourceTree = "<group>"; };
+		F00D5AAB98C30DB724720710 /* Pods_Everent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Everent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,17 +65,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1A246ED1E618A2B0B61424D /* Pods_Everent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A2A2EB481BBA3051898B2AB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AA97A5AFA5F7E3B1C78B66EA /* Pods-Everent.debug.xcconfig */,
+				A4FA3C10C4C63B5842C24D1F /* Pods-Everent.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		72AAE7F72B72BBAF0017D217 = {
 			isa = PBXGroup;
 			children = (
 				72AAE8022B72BBAF0017D217 /* Everent */,
 				72AAE8012B72BBAF0017D217 /* Products */,
+				1A2A2EB481BBA3051898B2AB /* Pods */,
+				8F085658412F08B6B779DA81 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,6 +139,7 @@
 		72AAE81A2B72BC270017D217 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				72254CFF2B72D95D006B3CE2 /* GoogleService-Info.plist */,
 				72AAE8032B72BBAF0017D217 /* AppDelegate.swift */,
 				72AAE8052B72BBAF0017D217 /* SceneDelegate.swift */,
 			);
@@ -173,6 +192,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		8F085658412F08B6B779DA81 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F00D5AAB98C30DB724720710 /* Pods_Everent.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -180,9 +207,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 72AAE8142B72BBB00017D217 /* Build configuration list for PBXNativeTarget "Everent" */;
 			buildPhases = (
+				5267C8C713E987D569AA9518 /* [CP] Check Pods Manifest.lock */,
 				72AAE7FC2B72BBAF0017D217 /* Sources */,
 				72AAE7FD2B72BBAF0017D217 /* Frameworks */,
 				72AAE7FE2B72BBAF0017D217 /* Resources */,
+				5C4943367E7F8CA79CD48661 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -232,12 +261,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				72AAE8102B72BBB00017D217 /* LaunchScreen.storyboard in Resources */,
+				72254D002B72D95D006B3CE2 /* GoogleService-Info.plist in Resources */,
 				72AAE80D2B72BBB00017D217 /* Assets.xcassets in Resources */,
 				72AAE80B2B72BBAF0017D217 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5267C8C713E987D569AA9518 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Everent-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5C4943367E7F8CA79CD48661 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Everent/Pods-Everent-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Everent/Pods-Everent-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Everent/Pods-Everent-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		72AAE7FC2B72BBAF0017D217 /* Sources */ = {
@@ -323,7 +395,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -386,7 +458,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -407,6 +479,7 @@
 		};
 		72AAE8152B72BBB00017D217 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA97A5AFA5F7E3B1C78B66EA /* Pods-Everent.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -435,6 +508,7 @@
 		};
 		72AAE8162B72BBB00017D217 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4FA3C10C4C63B5842C24D1F /* Pods-Everent.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
