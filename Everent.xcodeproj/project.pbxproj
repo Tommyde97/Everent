@@ -28,6 +28,10 @@
 		72AAE8372B72BE880017D217 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8362B72BE880017D217 /* SearchResultViewController.swift */; };
 		72AAE8392B72BEA60017D217 /* PostEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8382B72BEA60017D217 /* PostEditorViewController.swift */; };
 		72AAE83B2B72BF460017D217 /* PublishPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE83A2B72BF460017D217 /* PublishPostViewController.swift */; };
+		72B6EE632B73FA55001C1B87 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6EE622B73FA55001C1B87 /* DatabaseManager.swift */; };
+		72B6EE652B73FB13001C1B87 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6EE642B73FB13001C1B87 /* AuthManager.swift */; };
+		72B6EE672B73FB62001C1B87 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6EE662B73FB62001C1B87 /* StorageManager.swift */; };
+		72B6EE692B740F15001C1B87 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6EE682B740F15001C1B87 /* Extensions.swift */; };
 		D1A246ED1E618A2B0B61424D /* Pods_Everent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F00D5AAB98C30DB724720710 /* Pods_Everent.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +59,10 @@
 		72AAE8362B72BE880017D217 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		72AAE8382B72BEA60017D217 /* PostEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEditorViewController.swift; sourceTree = "<group>"; };
 		72AAE83A2B72BF460017D217 /* PublishPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishPostViewController.swift; sourceTree = "<group>"; };
+		72B6EE622B73FA55001C1B87 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		72B6EE642B73FB13001C1B87 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		72B6EE662B73FB62001C1B87 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		72B6EE682B740F15001C1B87 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A4FA3C10C4C63B5842C24D1F /* Pods-Everent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Everent.release.xcconfig"; path = "Target Support Files/Pods-Everent/Pods-Everent.release.xcconfig"; sourceTree = "<group>"; };
 		AA97A5AFA5F7E3B1C78B66EA /* Pods-Everent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Everent.debug.xcconfig"; path = "Target Support Files/Pods-Everent/Pods-Everent.debug.xcconfig"; sourceTree = "<group>"; };
 		F00D5AAB98C30DB724720710 /* Pods_Everent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Everent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +150,10 @@
 				72254CFF2B72D95D006B3CE2 /* GoogleService-Info.plist */,
 				72AAE8032B72BBAF0017D217 /* AppDelegate.swift */,
 				72AAE8052B72BBAF0017D217 /* SceneDelegate.swift */,
+				72B6EE622B73FA55001C1B87 /* DatabaseManager.swift */,
+				72B6EE642B73FB13001C1B87 /* AuthManager.swift */,
+				72B6EE662B73FB62001C1B87 /* StorageManager.swift */,
+				72B6EE682B740F15001C1B87 /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -171,14 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				72AAE8262B72BDCC0017D217 /* Onboarding */,
-				72AAE82C2B72BE1C0017D217 /* PostViewController.swift */,
-				72AAE82E2B72BE3D0017D217 /* EditProfileViewController.swift */,
-				72AAE8302B72BE4E0017D217 /* SettingsViewController.swift */,
-				72AAE8322B72BE610017D217 /* ListViewController.swift */,
-				72AAE8342B72BE730017D217 /* SearchViewController.swift */,
-				72AAE8362B72BE880017D217 /* SearchResultViewController.swift */,
-				72AAE8382B72BEA60017D217 /* PostEditorViewController.swift */,
-				72AAE83A2B72BF460017D217 /* PublishPostViewController.swift */,
+				72B6EE612B73F99C001C1B87 /* General */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -190,6 +195,21 @@
 				72AAE82A2B72BDFC0017D217 /* RegistrationViewController.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		72B6EE612B73F99C001C1B87 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				72AAE82C2B72BE1C0017D217 /* PostViewController.swift */,
+				72AAE82E2B72BE3D0017D217 /* EditProfileViewController.swift */,
+				72AAE8302B72BE4E0017D217 /* SettingsViewController.swift */,
+				72AAE8322B72BE610017D217 /* ListViewController.swift */,
+				72AAE8342B72BE730017D217 /* SearchViewController.swift */,
+				72AAE8362B72BE880017D217 /* SearchResultViewController.swift */,
+				72AAE8382B72BEA60017D217 /* PostEditorViewController.swift */,
+				72AAE83A2B72BF460017D217 /* PublishPostViewController.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 		8F085658412F08B6B779DA81 /* Frameworks */ = {
@@ -323,12 +343,16 @@
 				72AAE8082B72BBAF0017D217 /* HomeViewController.swift in Sources */,
 				72AAE82B2B72BDFC0017D217 /* RegistrationViewController.swift in Sources */,
 				72AAE8392B72BEA60017D217 /* PostEditorViewController.swift in Sources */,
+				72B6EE672B73FB62001C1B87 /* StorageManager.swift in Sources */,
 				72AAE82D2B72BE1C0017D217 /* PostViewController.swift in Sources */,
+				72B6EE632B73FA55001C1B87 /* DatabaseManager.swift in Sources */,
 				72AAE8212B72BD540017D217 /* NotificationsViewController.swift in Sources */,
 				72AAE8372B72BE880017D217 /* SearchResultViewController.swift in Sources */,
 				72AAE8282B72BDE20017D217 /* LoginViewController.swift in Sources */,
+				72B6EE692B740F15001C1B87 /* Extensions.swift in Sources */,
 				72AAE8352B72BE730017D217 /* SearchViewController.swift in Sources */,
 				72AAE8232B72BD5F0017D217 /* ProfileViewController.swift in Sources */,
+				72B6EE652B73FB13001C1B87 /* AuthManager.swift in Sources */,
 				72AAE8042B72BBAF0017D217 /* AppDelegate.swift in Sources */,
 				72AAE8062B72BBAF0017D217 /* SceneDelegate.swift in Sources */,
 				72AAE8332B72BE610017D217 /* ListViewController.swift in Sources */,
@@ -491,8 +515,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -520,8 +543,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
