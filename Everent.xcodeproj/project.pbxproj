@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		72254D002B72D95D006B3CE2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72254CFF2B72D95D006B3CE2 /* GoogleService-Info.plist */; };
+		726273C82B757EAE00383321 /* FeedPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726273C72B757EAE00383321 /* FeedPostTableViewCell.swift */; };
+		726273CB2B75822D00383321 /* FeedPostHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726273CA2B75822D00383321 /* FeedPostHeaderTableViewCell.swift */; };
+		726273CD2B75824300383321 /* FeedPostActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726273CC2B75824300383321 /* FeedPostActionsTableViewCell.swift */; };
+		726273CF2B75826200383321 /* FeedPostGeneralTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726273CE2B75826200383321 /* FeedPostGeneralTableViewCell.swift */; };
 		72AAE8042B72BBAF0017D217 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8032B72BBAF0017D217 /* AppDelegate.swift */; };
 		72AAE8062B72BBAF0017D217 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8052B72BBAF0017D217 /* SceneDelegate.swift */; };
 		72AAE8082B72BBAF0017D217 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8072B72BBAF0017D217 /* HomeViewController.swift */; };
@@ -37,6 +41,10 @@
 
 /* Begin PBXFileReference section */
 		72254CFF2B72D95D006B3CE2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		726273C72B757EAE00383321 /* FeedPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostTableViewCell.swift; sourceTree = "<group>"; };
+		726273CA2B75822D00383321 /* FeedPostHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		726273CC2B75824300383321 /* FeedPostActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostActionsTableViewCell.swift; sourceTree = "<group>"; };
+		726273CE2B75826200383321 /* FeedPostGeneralTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostGeneralTableViewCell.swift; sourceTree = "<group>"; };
 		72AAE8002B72BBAF0017D217 /* Everent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Everent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72AAE8032B72BBAF0017D217 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		72AAE8052B72BBAF0017D217 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +97,25 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		726273C62B757E8C00383321 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				726273C92B75820500383321 /* Home Feed */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		726273C92B75820500383321 /* Home Feed */ = {
+			isa = PBXGroup;
+			children = (
+				726273C72B757EAE00383321 /* FeedPostTableViewCell.swift */,
+				726273CA2B75822D00383321 /* FeedPostHeaderTableViewCell.swift */,
+				726273CC2B75824300383321 /* FeedPostActionsTableViewCell.swift */,
+				726273CE2B75826200383321 /* FeedPostGeneralTableViewCell.swift */,
+			);
+			path = "Home Feed";
+			sourceTree = "<group>";
+		};
 		72AAE7F72B72BBAF0017D217 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +149,7 @@
 		72AAE8172B72BC0A0017D217 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				726273C62B757E8C00383321 /* Cells */,
 				72AAE80C2B72BBB00017D217 /* Assets.xcassets */,
 				72AAE81B2B72BC7E0017D217 /* Storyboards */,
 			);
@@ -345,18 +373,22 @@
 				72AAE8392B72BEA60017D217 /* PostEditorViewController.swift in Sources */,
 				72B6EE672B73FB62001C1B87 /* StorageManager.swift in Sources */,
 				72AAE82D2B72BE1C0017D217 /* PostViewController.swift in Sources */,
+				726273C82B757EAE00383321 /* FeedPostTableViewCell.swift in Sources */,
 				72B6EE632B73FA55001C1B87 /* DatabaseManager.swift in Sources */,
 				72AAE8212B72BD540017D217 /* NotificationsViewController.swift in Sources */,
 				72AAE8372B72BE880017D217 /* SearchResultViewController.swift in Sources */,
 				72AAE8282B72BDE20017D217 /* LoginViewController.swift in Sources */,
 				72B6EE692B740F15001C1B87 /* Extensions.swift in Sources */,
+				726273CD2B75824300383321 /* FeedPostActionsTableViewCell.swift in Sources */,
 				72AAE8352B72BE730017D217 /* SearchViewController.swift in Sources */,
 				72AAE8232B72BD5F0017D217 /* ProfileViewController.swift in Sources */,
 				72B6EE652B73FB13001C1B87 /* AuthManager.swift in Sources */,
+				726273CF2B75826200383321 /* FeedPostGeneralTableViewCell.swift in Sources */,
 				72AAE8042B72BBAF0017D217 /* AppDelegate.swift in Sources */,
 				72AAE8062B72BBAF0017D217 /* SceneDelegate.swift in Sources */,
 				72AAE8332B72BE610017D217 /* ListViewController.swift in Sources */,
 				72AAE8312B72BE4E0017D217 /* SettingsViewController.swift in Sources */,
+				726273CB2B75822D00383321 /* FeedPostHeaderTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
