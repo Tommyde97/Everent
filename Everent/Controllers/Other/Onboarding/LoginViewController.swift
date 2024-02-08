@@ -13,8 +13,8 @@ class LoginViewController: UIViewController {
     struct Constants {
         static let cornerRadius: CGFloat = 8.0
     }
+    
     private let usernameEmailField: UITextField = {
-        
         let field = UITextField()
         field.placeholder = "Username or Email..."
         field.returnKeyType = .next
@@ -265,8 +265,9 @@ class LoginViewController: UIViewController {
     
     @objc private func didTapCreateAccountButton() {
         let vc = RegistrationViewController()
+        vc.title = "Create Accout"
         vc.modalPresentationStyle = .fullScreen
-        present(vc, animated:  true)
+        present(UINavigationController(rootViewController: vc), animated:  true)
     }
     
 }
