@@ -18,4 +18,9 @@ pod 'Firebase/Analytics'
 pod 'Firebase/Crashlytics'
 pod 'Firebase/Storage'
 
+#Google
+
+pod 'GoogleSignIn'
+pod 'GoogleSignInSwiftSupport'
+
 end

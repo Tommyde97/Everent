@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		72254D002B72D95D006B3CE2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72254CFF2B72D95D006B3CE2 /* GoogleService-Info.plist */; };
 		726273C82B757EAE00383321 /* FeedPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726273C72B757EAE00383321 /* FeedPostTableViewCell.swift */; };
 		726273CB2B75822D00383321 /* FeedPostHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726273CA2B75822D00383321 /* FeedPostHeaderTableViewCell.swift */; };
 		726273CD2B75824300383321 /* FeedPostActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726273CC2B75824300383321 /* FeedPostActionsTableViewCell.swift */; };
 		726273CF2B75826200383321 /* FeedPostGeneralTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726273CE2B75826200383321 /* FeedPostGeneralTableViewCell.swift */; };
+		728ED0532B76B6AB004EA682 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 728ED0522B76B6AB004EA682 /* GoogleService-Info.plist */; };
 		72AAE8042B72BBAF0017D217 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8032B72BBAF0017D217 /* AppDelegate.swift */; };
 		72AAE8062B72BBAF0017D217 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8052B72BBAF0017D217 /* SceneDelegate.swift */; };
 		72AAE8082B72BBAF0017D217 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8072B72BBAF0017D217 /* HomeViewController.swift */; };
@@ -40,11 +40,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		72254CFF2B72D95D006B3CE2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		726273C72B757EAE00383321 /* FeedPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostTableViewCell.swift; sourceTree = "<group>"; };
 		726273CA2B75822D00383321 /* FeedPostHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		726273CC2B75824300383321 /* FeedPostActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostActionsTableViewCell.swift; sourceTree = "<group>"; };
 		726273CE2B75826200383321 /* FeedPostGeneralTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostGeneralTableViewCell.swift; sourceTree = "<group>"; };
+		728ED0522B76B6AB004EA682 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		72AAE8002B72BBAF0017D217 /* Everent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Everent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72AAE8032B72BBAF0017D217 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		72AAE8052B72BBAF0017D217 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 		72AAE81A2B72BC270017D217 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				72254CFF2B72D95D006B3CE2 /* GoogleService-Info.plist */,
+				728ED0522B76B6AB004EA682 /* GoogleService-Info.plist */,
 				72AAE8032B72BBAF0017D217 /* AppDelegate.swift */,
 				72AAE8052B72BBAF0017D217 /* SceneDelegate.swift */,
 				72B6EE622B73FA55001C1B87 /* DatabaseManager.swift */,
@@ -308,8 +308,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				728ED0532B76B6AB004EA682 /* GoogleService-Info.plist in Resources */,
 				72AAE8102B72BBB00017D217 /* LaunchScreen.storyboard in Resources */,
-				72254D002B72D95D006B3CE2 /* GoogleService-Info.plist in Resources */,
 				72AAE80D2B72BBB00017D217 /* Assets.xcassets in Resources */,
 				72AAE80B2B72BBAF0017D217 /* Main.storyboard in Resources */,
 			);

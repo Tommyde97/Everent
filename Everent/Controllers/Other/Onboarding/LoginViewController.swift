@@ -7,6 +7,8 @@
 
 import UIKit
 import SafariServices
+import GoogleSignInSwift
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
     
@@ -89,7 +91,26 @@ class LoginViewController: UIViewController {
         return header
     }()
     
+    private let googleLogInButton: GIDSignInButton = {
+        let button = GIDSignInButton()
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = Constants.cornerRadius
+        return button
+    }()
     
+    //GoogleSignInButton(action: handleSignInButton)
+    
+//    func handleSignInButton() {
+//        //let vc: HomeViewController
+//        GIDSignIn.sharedInstance.signIn(withPresenting: HomeViewController()) { signInResult, error in
+//            guard let result = signInResult else {
+//                // Inspect error
+//                return
+//            }
+//            // If sign in succeeded, display the app's main content View.
+//        }
+        
+ //   }
     
 
     override func viewDidLoad() {
@@ -150,9 +171,16 @@ class LoginViewController: UIViewController {
             height: 52.0
         )
         
-        createAccountButton.frame = CGRect(
+        googleLogInButton.frame = CGRect(
             x: 25,
             y: loginButton.bottom + 10,
+            width: view.width-50,
+            height: 52.0
+        )
+        
+        createAccountButton.frame = CGRect(
+            x: 25,
+            y: googleLogInButton.bottom + 10,
             width: view.width-50,
             height: 52.0
         )
@@ -204,6 +232,7 @@ class LoginViewController: UIViewController {
         view.addSubview(privacyButton)
         view.addSubview(headerView)
         view.addSubview(createAccountButton)
+        view.addSubview(googleLogInButton)
     }
     
     @objc private func didTapLoginButton() {
