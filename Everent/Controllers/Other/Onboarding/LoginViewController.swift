@@ -7,6 +7,8 @@
 
 import UIKit
 import SafariServices
+import FirebaseAuth
+import FirebaseCore
 import GoogleSignInSwift
 import GoogleSignIn
 
@@ -98,26 +100,14 @@ class LoginViewController: UIViewController {
         return button
     }()
     
-    //GoogleSignInButton(action: handleSignInButton)
-    
-//    func handleSignInButton() {
-//        //let vc: HomeViewController
-//        GIDSignIn.sharedInstance.signIn(withPresenting: HomeViewController()) { signInResult, error in
-//            guard let result = signInResult else {
-//                // Inspect error
-//                return
-//            }
-//            // If sign in succeeded, display the app's main content View.
-//        }
-        
- //   }
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loginButton.addTarget(self,
                               action: #selector(didTapLoginButton),
+                              for: .touchUpInside)
+        googleLogInButton.addTarget(self,
+                              action: #selector(didTapGoogleLoginButton),
                               for: .touchUpInside)
         
         createAccountButton.addTarget(self,
@@ -198,7 +188,6 @@ class LoginViewController: UIViewController {
             width: view.width-20,
             height: 50
         )
-        
        
         configureHeaderView()
     }
@@ -273,6 +262,20 @@ class LoginViewController: UIViewController {
                     self.present(alert, animated: true)
                 }
             }
+        }
+    }
+    
+    @objc private func didTapGoogleLoginButton() {
+        let vc = HomeViewController()
+        present(vc, animated: true, completion: nil)
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: vc) { signInResult, error in
+            guard signInResult != nil else {
+                //Inspect Error
+                print("Log In Error: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            //If sign in succeeded, display the app's main content View.
         }
     }
     
