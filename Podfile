@@ -23,4 +23,11 @@ pod 'Firebase/Storage'
 pod 'GoogleSignIn'
 pod 'GoogleSignInSwiftSupport'
 
+#FaceBook
+
+#pod 'FBSDKLoginKit'
+pod 'FacebookCore'
+pod 'FacebookLogin'
+pod 'FacebookShare'
+
 end

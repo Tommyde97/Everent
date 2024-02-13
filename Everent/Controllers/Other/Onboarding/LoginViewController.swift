@@ -11,6 +11,8 @@ import FirebaseAuth
 import FirebaseCore
 import GoogleSignInSwift
 import GoogleSignIn
+import FBSDKLoginKit
+import FBSDKCoreKit
 
 class LoginViewController: UIViewController {
     
@@ -93,6 +95,14 @@ class LoginViewController: UIViewController {
         return header
     }()
     
+    private let facebookLoginButton: FBLoginButton = {
+        let button = FBLoginButton()
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = Constants.cornerRadius
+        button.permissions = ["public_profile", "email"]
+        return button
+    }()
+    
     private let googleLogInButton: GIDSignInButton = {
         let button = GIDSignInButton()
         button.layer.masksToBounds = true
@@ -103,13 +113,48 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let token = AccessToken.current, !token.isExpired {
+            let token = token.tokenString
+            
+            let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
+                                                             parameters: ["fields": "email, name"],
+                                                             tokenString: token,
+                                                             version: nil,
+                                                             httpMethod: .get)
+            
+            facebookRequest.start(completionHandler: { connection, result, error in
+                if let error = error {
+                    print("Error fetching user data: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let result = result as? [String: Any] else {
+                    print("Error parsing result")
+                    return
+                }
+                
+                // Handle the result data
+                print("User data: \(result)")
+            })
+            
+        } else {
+            
+            facebookLoginButton.permissions = ["public_profile", "email"]
+            facebookLoginButton.center = view.center
+            view.addSubview(facebookLoginButton)
+            
+           
+        }
+        
         loginButton.addTarget(self,
                               action: #selector(didTapLoginButton),
                               for: .touchUpInside)
         googleLogInButton.addTarget(self,
                               action: #selector(didTapGoogleLoginButton),
                               for: .touchUpInside)
-        
+        //facebookLoginButton.addTarget(self,
+        //                        action: #selector(didTapGoogleLoginButton),
+        //                        for: .touchUpInside)
         createAccountButton.addTarget(self,
                               action: #selector(didTapCreateAccountButton),
                               for: .touchUpInside)
@@ -123,6 +168,7 @@ class LoginViewController: UIViewController {
                               for: .touchUpInside)
         usernameEmailField.delegate = self
         passwordField.delegate = self
+        facebookLoginButton.delegate = self
         addSubviews()
         view.backgroundColor = .systemBackground
     }
@@ -161,9 +207,16 @@ class LoginViewController: UIViewController {
             height: 52.0
         )
         
-        googleLogInButton.frame = CGRect(
+        facebookLoginButton.frame = CGRect(
             x: 25,
             y: loginButton.bottom + 10,
+            width: view.width-50,
+            height: 52.0
+        )
+        
+        googleLogInButton.frame = CGRect(
+            x: 25,
+            y: facebookLoginButton.bottom + 10,
             width: view.width-50,
             height: 52.0
         )
@@ -221,6 +274,7 @@ class LoginViewController: UIViewController {
         view.addSubview(privacyButton)
         view.addSubview(headerView)
         view.addSubview(createAccountButton)
+        view.addSubview(facebookLoginButton)
         view.addSubview(googleLogInButton)
     }
     
@@ -249,7 +303,7 @@ class LoginViewController: UIViewController {
         AuthManager.shared.loginUser(username: username, email: email, password: password) { success in
             DispatchQueue.main.async {
                 if success {
-                    //User Logges In
+                    //User Logs In
                     self.dismiss(animated: true, completion: nil)
                 }else {
                     //Error Occurred
@@ -313,4 +367,72 @@ extension LoginViewController: UITextFieldDelegate {
         }
         return true
     }
+}
+
+extension LoginViewController: LoginButtonDelegate {
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        guard let token = result?.token?.tokenString else {
+            print("User failed to log in with Facebook")
+            return
+        }
+        
+        let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
+                                                         parameters: ["fields": "email, name"],
+                                                         tokenString: token,
+                                                         version: nil,
+                                                         httpMethod: .get)
+        
+        facebookRequest.start(completionHandler: { _, result, error in
+            guard let result = result as? [String: Any],
+                  error == nil else {
+                print("Error fetching user data: \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            // Handle the result data
+            print("User data: \(result)")
+            guard let userName = result["name"] as? String,
+                  let email = result["email"] as? String else {
+                print("Failed to get email from FBn result")
+                return
+            }
+            let nameComponets = userName.components(separatedBy: " ")
+            guard nameComponets.count == 2 else {
+                return
+            }
+            let firstName = nameComponets[0]
+            let lastName = nameComponets[1]
+            
+            DatabaseManager.shared.userExists(with: email, completion: { exists in
+                if !exists {
+                    DatabaseManager.shared.insertUser(with: EverentAppUser(firstName: firstName,
+                                                                           lastName: lastName,
+                                                                           emailAddress: email), completion: <#(Bool) -> Void#>)
+                }
+            })
+            
+            let credential = FacebookAuthProvider.credential(withAccessToken: token)
+            
+            Auth.auth().signIn(with: credential, completion: { [weak self] authResult, error in
+                guard let strongSelf = self else {
+                    return
+                }
+                guard authResult != nil, error == nil else {
+                    if let error = error {
+                        print("Facebook credential Login Failed, MFA may be needed - \(error)")
+                    }
+                    return
+                }
+                
+                print("Succesfully Logged user in")
+                strongSelf.navigationController?.present(HomeViewController(), animated: true, completion: nil)
+            })
+        })
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginKit.FBLoginButton) {
+        //No Operation
+    }
+    
 }
