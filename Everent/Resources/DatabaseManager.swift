@@ -18,26 +18,11 @@ public class DatabaseManager {
         safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
         return safeEmail
     }
-
+    
     
     // MARK: - Public
     
-    ///Checks if user exists for given email
-    ///Parameters
-    ///- email:              Target email to be checked
-    ///- completion:     Async closure to return with result
-    public func userExists(with email: String, completion: @escaping((Bool) -> Void)) {
-        
-        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
-        
-        database.child(safeEmail).observeSingleEvent(of: .value, with: { snapshot in
-            guard snapshot.value as? [String: Any] != nil else {
-                completion(false)
-                return
-            }
-            completion(true)
-        })
-    }
+
     
     /// Check if username and email is avaliable
     /// - Parameters
@@ -67,9 +52,29 @@ public class DatabaseManager {
             }
         }
     }
+}
+    
+extension DatabaseManager {
+    
+    ///Checks if user exists for given email
+    ///Parameters
+    ///- email:              Target email to be checked
+    ///- completion:     Async closure to return with result
+    public func userExists(with email: String, completion: @escaping((Bool) -> Void)) {
+        
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        
+        database.child(safeEmail).observeSingleEvent(of: .value, with: { snapshot in
+            guard snapshot.value as? [String: Any] != nil else {
+                completion(false)
+                return
+            }
+            completion(true)
+        })
+    }
     
     /// Inserts new user to database
-     func insertUser(with user: EverentAppUser, completion: @escaping (Bool) -> Void) {
+    public func insertUser(with user: EverentAppUser, completion: @escaping (Bool) -> Void) {
         database.child(user.safeEmail).setValue([
             "first_name": user.firstName,
             "last_name": user.lastName
@@ -121,9 +126,24 @@ public class DatabaseManager {
             })
         })
     }
+    /// Gets all users from Database
+    public func getAllUsers(completion: @escaping (Result<[[String: String]], Error>) -> Void) {
+        database.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            guard let value = snapshot.value as? [[String: String]] else {
+                completion(.failure(DatabaseError.failedToFetch))
+                return
+            }
+            completion(.success(value))
+        })
+    }
+    
+    public enum DatabaseError: Error {
+        case failedToFetch
+    }
 }
 
-struct EverentAppUser {
+
+public struct EverentAppUser {
     let firstName: String
     let lastName: String
     let emailAddress: String

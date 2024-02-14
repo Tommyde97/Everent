@@ -30,4 +30,8 @@ pod 'FacebookCore'
 pod 'FacebookLogin'
 pod 'FacebookShare'
 
+#Other
+
+pod 'SDWebImage'
+
 end

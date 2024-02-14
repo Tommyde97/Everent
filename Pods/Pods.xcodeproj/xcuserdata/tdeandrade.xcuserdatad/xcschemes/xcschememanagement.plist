@@ -11,22 +11,12 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>FBAEMKit.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
 		<key>FBSDKCoreKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>1</integer>
-		</dict>
-		<key>FBSDKCoreKit_Basics.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
 		</dict>
 		<key>FBSDKLoginKit.xcscheme</key>
 		<dict>
@@ -251,6 +241,16 @@
 			<false/>
 			<key>orderHint</key>
 			<integer>31</integer>
+		</dict>
+		<key>SDWebImage-SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>leveldb-library.xcscheme</key>
 		<dict>

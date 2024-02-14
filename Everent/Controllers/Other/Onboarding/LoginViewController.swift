@@ -392,23 +392,50 @@ extension LoginViewController: LoginButtonDelegate {
             
             // Handle the result data
             print("User data: \(result)")
-            guard let userName = result["name"] as? String,
-                  let email = result["email"] as? String else {
-                print("Failed to get email from FBn result")
+            
+            guard let firstName = result["first_name"] as? String,
+                      let lastName = result["last_name"] as? String,
+                      let email = result["email"] as? String,
+                      let picture = result["picture"] as? [String: Any],
+                      let data = picture["data"] as? [String: Any],
+                      let pictureUrl = data["url"] as? String else {
+                print("Failed to get email from FB result")
                 return
             }
-            let nameComponets = userName.components(separatedBy: " ")
-            guard nameComponets.count == 2 else {
-                return
-            }
-            let firstName = nameComponets[0]
-            let lastName = nameComponets[1]
+            
+            UserDefaults.standard.set(email, forKey: "email")
+            UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
             
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
-                    DatabaseManager.shared.insertUser(with: EverentAppUser(firstName: firstName,
-                                                                           lastName: lastName,
-                                                                           emailAddress: email), completion: <#(Bool) -> Void#>)
+                    let everentUser = EverentAppUser(firstName: firstName,
+                                                     lastName: lastName,
+                                                     emailAddress: email)
+                    
+                    DatabaseManager.shared.insertUser(with: everentUser, completion: { success in
+                        if success {
+                            guard let url = URL(string: pictureUrl) else {
+                                return
+                            }
+                            
+                            print("Donwloading data from a facebook image")
+                            
+                            URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
+                                guard let data = data else {
+                                    print("Failed to get data from facebook")
+                                    return
+                                }
+                                
+                                print("got data from FB, uploading...")
+                                
+                                //Upload image
+                                let fileName = everentUser.profilePictureFileName
+                                StorageManager.shared.uploadProfilePicture(with: data, filename: fileName, completion: {result in
+                                    switch result {
+                                    case .success(let downloadUrl):
+                                        
+                                    }})
+                        }}
                 }
             })
             

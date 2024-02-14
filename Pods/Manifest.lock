@@ -179,6 +179,9 @@ PODS:
   - PromisesSwift (2.3.1):
     - PromisesObjC (= 2.3.1)
   - RecaptchaInterop (100.0.0)
+  - SDWebImage (5.18.11):
+    - SDWebImage/Core (= 5.18.11)
+  - SDWebImage/Core (5.18.11)
 
 DEPENDENCIES:
   - FacebookCore
@@ -192,6 +195,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - GoogleSignIn
   - GoogleSignInSwiftSupport
+  - SDWebImage
 
 SPEC REPOS:
   trunk:
@@ -228,6 +232,7 @@ SPEC REPOS:
     - PromisesObjC
     - PromisesSwift
     - RecaptchaInterop
+    - SDWebImage
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
@@ -263,7 +268,8 @@ SPEC CHECKSUMS:
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
+  SDWebImage: a3ba0b8faac7228c3c8eadd1a55c9c9fe5e16457
 
-PODFILE CHECKSUM: eb10ee8400f8904b44d3440a32e5748749fc6383
+PODFILE CHECKSUM: d1aeae523a2fa306eca095a69b6acd1f95b9caa3
 
 COCOAPODS: 1.15.2
