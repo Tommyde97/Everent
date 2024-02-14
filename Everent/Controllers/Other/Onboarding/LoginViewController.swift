@@ -369,16 +369,21 @@ extension LoginViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: Facebook Login -----------------------------------------------------------------------------------------------------
+
 extension LoginViewController: LoginButtonDelegate {
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        //No Operation
+    }
     
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
         guard let token = result?.token?.tokenString else {
             print("User failed to log in with Facebook")
             return
         }
-        
+
         let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
-                                                         parameters: ["fields": "email, name"],
+                                                         parameters: ["fields": "email, first_name, last_name, picture.type(large)"],
                                                          tokenString: token,
                                                          version: nil,
                                                          httpMethod: .get)
@@ -386,21 +391,20 @@ extension LoginViewController: LoginButtonDelegate {
         facebookRequest.start(completionHandler: { _, result, error in
             guard let result = result as? [String: Any],
                   error == nil else {
-                print("Error fetching user data: \(String(describing: error?.localizedDescription))")
+                print("Failed to make facebook graph request")
                 return
             }
             
-            // Handle the result data
-            print("User data: \(result)")
+            print(result)
             
             guard let firstName = result["first_name"] as? String,
-                      let lastName = result["last_name"] as? String,
-                      let email = result["email"] as? String,
-                      let picture = result["picture"] as? [String: Any],
-                      let data = picture["data"] as? [String: Any],
-                      let pictureUrl = data["url"] as? String else {
-                print("Failed to get email from FB result")
-                return
+                  let lastName = result["last_name"] as? String,
+                  let email = result["email"] as? String,
+                  let picture = result["picture"] as? [String: Any],
+                  let data = picture["data"] as? [String: Any],
+                  let pictureUrl = data["url"] as? String else {
+                    print("Failed to get email and name fom fb result")
+                    return
             }
             
             UserDefaults.standard.set(email, forKey: "email")
@@ -408,17 +412,18 @@ extension LoginViewController: LoginButtonDelegate {
             
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
-                    let everentUser = EverentAppUser(firstName: firstName,
-                                                     lastName: lastName,
-                                                     emailAddress: email)
+                    let chatUser = EverentAppUser(firstName: firstName,
+                                                 lastName: lastName,
+                                                 emailAddress: email)
                     
-                    DatabaseManager.shared.insertUser(with: everentUser, completion: { success in
+                    DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
                         if success {
+                            
                             guard let url = URL(string: pictureUrl) else {
                                 return
                             }
                             
-                            print("Donwloading data from a facebook image")
+                            print("Downloading data from a facebook image")
                             
                             URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
                                 guard let data = data else {
@@ -429,37 +434,41 @@ extension LoginViewController: LoginButtonDelegate {
                                 print("got data from FB, uploading...")
                                 
                                 //Upload image
-                                let fileName = everentUser.profilePictureFileName
-                                StorageManager.shared.uploadProfilePicture(with: data, filename: fileName, completion: {result in
+                                let fileName = chatUser.profilePictureFileName
+                                StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName, completion: { result in
                                     switch result {
                                     case .success(let downloadUrl):
-                                        
-                                    }})
-                        }}
+                                        UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                        print(downloadUrl)
+                                    case .failure(let error):
+                                        print("Storage nmabager error: \(error)")
+                                    }
+                                })
+                            }).resume()
+                        }
+                    })
                 }
             })
             
-            let credential = FacebookAuthProvider.credential(withAccessToken: token)
-            
-            Auth.auth().signIn(with: credential, completion: { [weak self] authResult, error in
-                guard let strongSelf = self else {
-                    return
-                }
-                guard authResult != nil, error == nil else {
-                    if let error = error {
-                        print("Facebook credential Login Failed, MFA may be needed - \(error)")
+            // Log in the user using AuthManager
+            AuthManager.shared.loginUser(username: nil, email: email, password: "", completion: { success in
+                
+                DispatchQueue.main.async {
+                    if success {
+                        // Handle successful login
+                        self.navigationController?.dismiss(animated: true, completion: {
+                            if let homeVC = UIStoryboard(name: "HomeViewController", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
+                                self.navigationController?.pushViewController(homeVC, animated: true)
+                                print("Successfully logged in with Facebook")
+                            }
+                        })
+                    } else {
+                        // Handle login failure
+                        print("Failed to log in with Facebook")
                     }
-                    return
                 }
                 
-                print("Succesfully Logged user in")
-                strongSelf.navigationController?.present(HomeViewController(), animated: true, completion: nil)
             })
         })
     }
-    
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginKit.FBLoginButton) {
-        //No Operation
-    }
-    
 }

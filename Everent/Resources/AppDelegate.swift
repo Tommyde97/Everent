@@ -27,8 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ApplicationDelegate.shared.application(app,
                                                open: url,
                                                sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-                                               annotation: options[UIApplication.OpenURLOptionsKey.annotation]
-        )
+                                               annotation: options[UIApplication.OpenURLOptionsKey.annotation])
+        // If not handled by this app, return false.
+        return false
+        
         //return GIDSignIn.sharedInstance.handle(url)
     }
     
@@ -66,5 +68,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       //  let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
         
     }
+    
 }
+
+
 
