@@ -97,8 +97,6 @@ class LoginViewController: UIViewController {
     
     private let facebookLoginButton: FBLoginButton = {
         let button = FBLoginButton()
-        button.layer.masksToBounds = true
-        button.layer.cornerRadius = Constants.cornerRadius
         button.permissions = ["public_profile", "email"]
         return button
     }()
@@ -113,38 +111,38 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let token = AccessToken.current, !token.isExpired {
-            let token = token.tokenString
-            
-            let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
-                                                             parameters: ["fields": "email, name"],
-                                                             tokenString: token,
-                                                             version: nil,
-                                                             httpMethod: .get)
-            
-            facebookRequest.start(completionHandler: { connection, result, error in
-                if let error = error {
-                    print("Error fetching user data: \(error.localizedDescription)")
-                    return
-                }
-                
-                guard let result = result as? [String: Any] else {
-                    print("Error parsing result")
-                    return
-                }
-                
-                // Handle the result data
-                print("User data: \(result)")
-            })
-            
-        } else {
-            
-            facebookLoginButton.permissions = ["public_profile", "email"]
-            facebookLoginButton.center = view.center
-            view.addSubview(facebookLoginButton)
-            
-           
-        }
+  //    if let token = AccessToken.current, !token.isExpired {
+  //        let token = token.tokenString
+  //
+  //        let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
+  //                                                         parameters: ["fields": "email, name"],
+  //                                                         tokenString: token,
+  //                                                         version: nil,
+  //                                                         httpMethod: .get)
+  //
+  //        facebookRequest.start(completionHandler: { connection, result, error in
+  //            if let error = error {
+  //                print("Error fetching user data: \(error.localizedDescription)")
+  //                return
+  //            }
+  //
+  //            guard let result = result as? [String: Any] else {
+  //                print("Error parsing result")
+  //                return
+  //            }
+  //
+  //            // Handle the result data
+  //            print("User data: \(result)")
+  //        })
+  //
+  //    } else {
+  //
+  //        facebookLoginButton.permissions = ["public_profile", "email"]
+  //        facebookLoginButton.center = view.center
+  //        view.addSubview(facebookLoginButton)
+  //
+  //
+  //    }
         
         loginButton.addTarget(self,
                               action: #selector(didTapLoginButton),
@@ -441,7 +439,7 @@ extension LoginViewController: LoginButtonDelegate {
                                         UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
                                         print(downloadUrl)
                                     case .failure(let error):
-                                        print("Storage nmabager error: \(error)")
+                                        print("Storage manager error: \(error)")
                                     }
                                 })
                             }).resume()
@@ -450,25 +448,23 @@ extension LoginViewController: LoginButtonDelegate {
                 }
             })
             
-            // Log in the user using AuthManager
-            AuthManager.shared.loginUser(username: nil, email: email, password: "", completion: { success in
-                
+            AuthManager.shared.signIn(with: token) { [weak self] success, error in
                 DispatchQueue.main.async {
                     if success {
-                        // Handle successful login
-                        self.navigationController?.dismiss(animated: true, completion: {
-                            if let homeVC = UIStoryboard(name: "HomeViewController", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
-                                self.navigationController?.pushViewController(homeVC, animated: true)
-                                print("Successfully logged in with Facebook")
-                            }
-                        })
-                    } else {
-                        // Handle login failure
-                        print("Failed to log in with Facebook")
+                        //User Logs In
+                        self?.dismiss(animated: true, completion: nil)
+                    }else {
+                        //Error Occurred
+                        let alert = UIAlertController(title: "Log in Error",
+                                                      message: "We were unable to log you in",
+                                                      preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Dismiss",
+                                                      style: .cancel,
+                                                      handler: nil))
+                        self?.present(alert, animated: true)
                     }
                 }
-                
-            })
+            }
         })
     }
 }

@@ -81,4 +81,15 @@ public class AuthManager {
             
         }
     }
+    public func signIn(with facebookToken: String, completion: @escaping (Bool, Error?) -> Void) {
+        let credential = FacebookAuthProvider.credential(withAccessToken: facebookToken)
+        Auth.auth().signIn(with: credential) { authResult, error in
+            if let error = error {
+                print("Failed to sign in with Facebook: \(error.localizedDescription)")
+                completion(false, error)
+                return
+            }
+            completion(true, nil)
+        }
+    }
 }
