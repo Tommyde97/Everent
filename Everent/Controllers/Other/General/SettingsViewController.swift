@@ -8,6 +8,8 @@
 
 import UIKit
 import SafariServices
+import FBSDKLoginKit
+import GoogleSignIn
 
 struct SettingCellModel {
     let title: String
@@ -34,6 +36,7 @@ final class SettingsViewController: UIViewController {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -125,6 +128,12 @@ final class SettingsViewController: UIViewController {
             AuthManager.shared.logOut(completion: { success in
                 DispatchQueue.main.async {
                     if success {
+                        //Log Out Facebook
+                        FBSDKLoginKit.LoginManager().logOut()
+                        
+                        //Log Out Google
+                        GIDSignIn.sharedInstance.signOut()
+                        
                         //Present Log In
                         let loginVC = LoginViewController()
                         loginVC.modalPresentationStyle = .fullScreen
