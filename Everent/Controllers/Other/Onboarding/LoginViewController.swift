@@ -111,39 +111,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-  //    if let token = AccessToken.current, !token.isExpired {
-  //        let token = token.tokenString
-  //
-  //        let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
-  //                                                         parameters: ["fields": "email, name"],
-  //                                                         tokenString: token,
-  //                                                         version: nil,
-  //                                                         httpMethod: .get)
-  //
-  //        facebookRequest.start(completionHandler: { connection, result, error in
-  //            if let error = error {
-  //                print("Error fetching user data: \(error.localizedDescription)")
-  //                return
-  //            }
-  //
-  //            guard let result = result as? [String: Any] else {
-  //                print("Error parsing result")
-  //                return
-  //            }
-  //
-  //            // Handle the result data
-  //            print("User data: \(result)")
-  //        })
-  //
-  //    } else {
-  //
-  //        facebookLoginButton.permissions = ["public_profile", "email"]
-  //        facebookLoginButton.center = view.center
-  //        view.addSubview(facebookLoginButton)
-  //
-  //
-  //    }
-        
         loginButton.addTarget(self,
                               action: #selector(didTapLoginButton),
                               for: .touchUpInside)
@@ -317,20 +284,6 @@ class LoginViewController: UIViewController {
         }
     }
     
-    @objc private func didTapGoogleLoginButton() {
-        let vc = HomeViewController()
-        present(vc, animated: true, completion: nil)
-        
-        GIDSignIn.sharedInstance.signIn(withPresenting: vc) { signInResult, error in
-            guard signInResult != nil else {
-                //Inspect Error
-                print("Log In Error: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            //If sign in succeeded, display the app's main content View.
-        }
-    }
-    
     @objc private func didTapTermsButton() {
         guard let url = URL(string: "https://help.instagram.com/581066165581870/?helpref=uf_share") else {
             return
@@ -354,32 +307,38 @@ class LoginViewController: UIViewController {
         present(UINavigationController(rootViewController: vc), animated:  true)
     }
     
-}
-
-extension LoginViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == usernameEmailField {
-            passwordField.becomeFirstResponder()
-        } else if textField == passwordField {
-            didTapLoginButton()
+// MARK: Google Login ------------------------------------------------------------------------------------------------------
+    
+    @objc func didTapGoogleLoginButton(sender: Any) {
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
+            guard error == nil else {
+                print("Sign-In error: \(error!)")
+                return
+            }
+            self.dismiss(animated: true) {
+                // Present your main app content here
+                // For example, present a new view controller
+                let mainViewController = HomeViewController()
+                self.present(mainViewController, animated: true)
+            }
+            
+            // If sign in succeeded, display the app's main content View.
+            
         }
-        return true
     }
+
 }
 
 // MARK: Facebook Login -----------------------------------------------------------------------------------------------------
 
 extension LoginViewController: LoginButtonDelegate {
-    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
-        //No Operation
-    }
-    
+
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
         guard let token = result?.token?.tokenString else {
             print("User failed to log in with Facebook")
             return
         }
-
+        
         let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
                                                          parameters: ["fields": "email, first_name, last_name, picture.type(large)"],
                                                          tokenString: token,
@@ -401,8 +360,8 @@ extension LoginViewController: LoginButtonDelegate {
                   let picture = result["picture"] as? [String: Any],
                   let data = picture["data"] as? [String: Any],
                   let pictureUrl = data["url"] as? String else {
-                    print("Failed to get email and name fom fb result")
-                    return
+                print("Failed to get email and name fom fb result")
+                return
             }
             
             UserDefaults.standard.set(email, forKey: "email")
@@ -411,8 +370,8 @@ extension LoginViewController: LoginButtonDelegate {
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
                     let chatUser = EverentAppUser(firstName: firstName,
-                                                 lastName: lastName,
-                                                 emailAddress: email)
+                                                  lastName: lastName,
+                                                  emailAddress: email)
                     
                     DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
                         if success {
@@ -467,4 +426,21 @@ extension LoginViewController: LoginButtonDelegate {
             }
         })
     }
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        //No Operation
+    }
+}
+
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == usernameEmailField {
+            passwordField.becomeFirstResponder()
+        } else if textField == passwordField {
+            didTapLoginButton()
+        }
+        return true
+    }
+    
 }
