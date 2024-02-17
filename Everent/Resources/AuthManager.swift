@@ -104,8 +104,8 @@ public class AuthManager {
  //    }
     
     public func googleSignIn(with googleToken: String, completion: @escaping (Bool, Error?) -> Void) {
-        let credential = GoogleAuthProvider.credential(withIDToken: googleToken, accessToken: "")
-        Auth.auth().signIn(with: credential) { authResult, error in
+        let googleCredential = GoogleAuthProvider.credential(withIDToken: googleToken, accessToken: googleToken)
+        Auth.auth().signIn(with: googleCredential) { authResult, error in
             if let error = error {
                 print("Failed to sign in with Google: \(error.localizedDescription)")
                 completion(false, error)

@@ -310,11 +310,12 @@ class LoginViewController: UIViewController {
 // MARK: Google Login ------------------------------------------------------------------------------------------------------
     
     @objc func didTapGoogleLoginButton(sender: Any) {
-        GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { authentication, error in
             guard error == nil else {
                 print("Sign-In error: \(error!)")
                 return
             }
+            
             self.dismiss(animated: true) {
                 // Present your main app content here
                 // For example, present a new view controller
@@ -322,11 +323,30 @@ class LoginViewController: UIViewController {
                 self.present(mainViewController, animated: true)
             }
             
-            // If sign in succeeded, display the app's main content View.
+            guard let user = authentication?.user,
+                  let idToken = user.idToken?.tokenString else {
+                return
+            }
             
+            AuthManager.shared.googleSignIn(with: idToken) { [weak self] success, error in
+                DispatchQueue.main.async {
+                    if success {
+                        //User Logs In
+                        self?.dismiss(animated: true, completion: nil)
+                    }else {
+                        //Error Occurred
+                        let alert = UIAlertController(title: "Log in Error",
+                                                      message: "We were unable to log you in",
+                                                      preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Dismiss",
+                                                      style: .cancel,
+                                                      handler: nil))
+                        self?.present(alert, animated: true)
+                    }
+                }
+            }
         }
     }
-
 }
 
 // MARK: Facebook Login -----------------------------------------------------------------------------------------------------
