@@ -326,59 +326,62 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            guard let firstName = ["first_name"] as? String,
-                  let lastName = ["last_name"] as? String,
-                  let email = ["email"] as? String,
-                  let picture = ["picture"] as? [String: Any],
-                  let data = picture["data"] as? [String: Any],
-                  let pictureUrl = data["url"] as? String else {
-                print("Failed to get email and name fom fb result")
-                return
-            }
-            
-            UserDefaults.standard.set(email, forKey: "email")
-            UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
-            
-            
-            DatabaseManager.shared.userExists(with: email, completion: { exists in
-                if !exists {
-                    let everentUser = EverentAppUser(firstName: firstName,
-                                                  lastName: lastName,
-                                                  emailAddress: email)
-                    
-                    DatabaseManager.shared.insertUser(with: everentUser, completion: { success in
-                        if success {
-                            
-                            guard let url = URL(string: pictureUrl) else {
-                                return
-                            }
-                            
-                            print("Downloading data from a facebook image")
-                            
-                            URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
-                                guard let data = data else {
-                                    print("Failed to get data from facebook")
-                                    return
-                                }
-                                
-                                print("got data from FB, uploading...")
-                                
-                                //Upload image
-                                let fileName = everentUser.profilePictureFileName
-                                StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName, completion: { result in
-                                    switch result {
-                                    case .success(let downloadUrl):
-                                        UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
-                                        print(downloadUrl)
-                                    case .failure(let error):
-                                        print("Storage manager error: \(error)")
-                                    }
-                                })
-                            }).resume()
-                        }
-                    })
-                }
-            })
+         //   var UInt8 = UInt8()
+         //
+      //      guard let userId = user.userID,
+      //            let firstName = user.profile?.givenName,
+      //            let lastName = user.profile?.familyName,
+      //            let email = user.profile?.email as? String,
+      //            //let userId = idToken as? String,
+      //            //let pictureUrl = user.profile?.imageURL(withDimension: UInt(UInt8)) as? String
+      //      else {
+      //          print("Failed to get email and name fom Google result")
+      //          return
+      //      }
+         //
+         //   UserDefaults.standard.set(email, forKey: "email")
+         //   UserDefaults.standard.set("\(fullName)", forKey: "name")
+         //
+         //
+     //       DatabaseManager.shared.userExists(with: email, completion: { exists in
+     //           if !exists {
+     //               let everentUser = EverentAppUser(firstName: firstName,
+     //                                                lastName: lastName,
+     //                                                emailAddress: email)
+     //
+     //               DatabaseManager.shared.insertUser(with: everentUser, completion: { success in
+     //                   if success {
+     //
+     //                       guard let url = URL(string: pictureUrl) else {
+     //                           return
+     //                       }
+         //
+         //                   print("Downloading data from a facebook image")
+         //
+         //                   URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
+         //                       guard let data = data else {
+         //                           print("Failed to get data from facebook")
+         //                           return
+         //                       }
+         //
+         //                       print("got data from FB, uploading...")
+         //
+         //                       //Upload image
+         //                       let fileName = everentUser.profilePictureFileName
+         //                       StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName, completion: { result in
+         //                           switch result {
+         //                           case .success(let downloadUrl):
+         //                               UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+         //                               print(downloadUrl)
+         //                           case .failure(let error):
+         //                               print("Storage manager error: \(error)")
+         //                           }
+         //                       })
+         //                   }).resume()
+         //               }
+         //           })
+         //       }
+         //   })
             
             AuthManager.shared.googleSignIn(with: idToken) { [weak self] success, error in
                 DispatchQueue.main.async {

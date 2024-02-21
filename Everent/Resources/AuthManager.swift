@@ -99,10 +99,6 @@ public class AuthManager {
     
     //Google
     
- //   func authenticateUser(credentials: AuthCredential) async throws -> AuthDataResult {
- //        return try await Auth.auth().signIn(with: credentials)
- //    }
-    
     public func googleSignIn(with googleToken: String, completion: @escaping (Bool, Error?) -> Void) {
         let googleCredential = GoogleAuthProvider.credential(withIDToken: googleToken, accessToken: googleToken)
         Auth.auth().signIn(with: googleCredential) { authResult, error in
@@ -114,22 +110,4 @@ public class AuthManager {
             completion(true, nil)
         }
     }
-    
-  //  public func googleAuth(_ user: GIDGoogleUser) async throws -> AuthDataResult? {
-  //      guard let idToken = user.idToken?.tokenString else { return nil }
-  //
-  //      // 1.
-  //      let credentials = GoogleAuthProvider.credential(
-  //          withIDToken: idToken,
-  //          accessToken: user.accessToken.tokenString
-  //      )
-  //      do {
-  //          // 2.
-  //          return try await authenticateUser(credentials: credentials)
-  //      }
-  //      catch {
-  //          print("FirebaseAuthError: googleAuth(user:) failed. \(error)")
-  //          throw error
-  //      }
-  //  }
 }
