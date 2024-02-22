@@ -325,13 +325,13 @@ class LoginViewController: UIViewController {
                   let idToken = user.idToken?.tokenString else {
                 return
             }
-            
-         //   var UInt8 = UInt8()
-         //
-      //      guard let userId = user.userID,
-      //            let firstName = user.profile?.givenName,
-      //            let lastName = user.profile?.familyName,
-      //            let email = user.profile?.email as? String,
+            print("Did sign in with Google: \(user)")
+            guard let firstName = user.profile?.givenName,
+                  let lastName = user.profile?.familyName,
+                  let email = user.profile?.email,
+                  let pictureUrl = user.profile?.imageURL(withDimension: UInt()) as? String else {
+                return
+            }
       //            //let userId = idToken as? String,
       //            //let pictureUrl = user.profile?.imageURL(withDimension: UInt(UInt8)) as? String
       //      else {
@@ -343,18 +343,52 @@ class LoginViewController: UIViewController {
          //   UserDefaults.standard.set("\(fullName)", forKey: "name")
          //
          //
-     //       DatabaseManager.shared.userExists(with: email, completion: { exists in
-     //           if !exists {
-     //               let everentUser = EverentAppUser(firstName: firstName,
-     //                                                lastName: lastName,
-     //                                                emailAddress: email)
-     //
-     //               DatabaseManager.shared.insertUser(with: everentUser, completion: { success in
-     //                   if success {
-     //
-     //                       guard let url = URL(string: pictureUrl) else {
-     //                           return
-     //                       }
+            DatabaseManager.shared.userExists(with: email, completion: { exists in
+                if !exists {
+                    let everentUser = EverentAppUser(firstName: firstName,
+                                                  lastName: lastName,
+                                                  emailAddress: email)
+                    
+                    DatabaseManager.shared.insertUser(with: everentUser, completion: { success in
+                        if success {
+                            
+                            guard let url = URL(string: pictureUrl) else {
+                                return
+                            }
+                            
+                            print("Downloading data from a facebook image")
+                            
+                            URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
+                                guard let data = data else {
+                                    print("Failed to get data from facebook")
+                                    return
+                                }
+                                
+                                print("got data from FB, uploading...")
+                                
+                                //Upload image
+                                let fileName = everentUser.profilePictureFileName
+                                StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName, completion: { result in
+                                    switch result {
+                                    case .success(let downloadUrl):
+                                        UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                        print(downloadUrl)
+                                    case .failure(let error):
+                                        print("Storage manager error: \(error)")
+                                    }
+                                })
+                            }).resume()
+                        }
+                    })
+                }
+            })
+     
+     //              DatabaseManager.shared.insertUser(with: everentUser, completion: { success in
+     //                  if success {
+     
+     //                      guard let url = URL(string: pictureUrl) else {
+     //                          return
+     //                      }
          //
          //                   print("Downloading data from a facebook image")
          //
