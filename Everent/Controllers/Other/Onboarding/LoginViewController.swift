@@ -131,6 +131,7 @@ class LoginViewController: UIViewController {
         usernameEmailField.delegate = self
         passwordField.delegate = self
         facebookLoginButton.delegate = self
+        //GIDSignIn.sharedInstance.uiDelegate = self
         addSubviews()
         view.backgroundColor = .systemBackground
     }
@@ -175,7 +176,6 @@ class LoginViewController: UIViewController {
             width: view.width-50,
             height: 52.0
         )
-        //facebookLoginButton
         
         googleLogInButton.frame = CGRect(
             x: 25,
@@ -307,10 +307,14 @@ class LoginViewController: UIViewController {
     
 // MARK: Google Login ------------------------------------------------------------------------------------------------------
     
-    @objc func didTapGoogleLoginButton(sender: Any) {
-        GIDSignIn.sharedInstance.signIn(withPresenting: self) { authentication, error in
+    @objc func didTapGoogleLoginButton(_ loginButton: GIDSignInButton, didCompleteWith result: GIDSignInResult?, error: Error?) {
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
             guard error == nil else {
                 print("Sign-In error: \(error!)")
+                return
+            }
+            
+            guard let signInResult = signInResult else {
                 return
             }
             
@@ -321,54 +325,51 @@ class LoginViewController: UIViewController {
                 self.present(mainViewController, animated: true)
             }
             
-            guard let user = authentication?.user,
-                  let idToken = user.idToken?.tokenString else {
-                return
-            }
+            let user = signInResult.user
+            let emailAddress = user.profile?.email
+            let fullName = user.profile?.name
+            let givenName = user.profile?.givenName
+            let familyName = user.profile?.familyName
+            let profilePicUrl = user.profile?.imageURL(withDimension: 320)
+            
+            signInResult.user.refreshTokensIfNeeded { user, error in
+                guard error == nil else {
+                    return
+                }
+                guard let user = user else {
+                    return
+                }}
+                let idToken = user.idToken
+
             print("Did sign in with Google: \(user)")
-            guard let firstName = user.profile?.givenName,
-                  let lastName = user.profile?.familyName,
-                  let email = user.profile?.email,
-                  let pictureUrl = user.profile?.imageURL(withDimension: UInt()) as? String else {
-                return
-            }
-      //            //let userId = idToken as? String,
-      //            //let pictureUrl = user.profile?.imageURL(withDimension: UInt(UInt8)) as? String
-      //      else {
-      //          print("Failed to get email and name fom Google result")
-      //          return
-      //      }
-         //
-         //   UserDefaults.standard.set(email, forKey: "email")
-         //   UserDefaults.standard.set("\(fullName)", forKey: "name")
-         //
-         //
-            DatabaseManager.shared.userExists(with: email, completion: { exists in
+  
+            DatabaseManager.shared.userExists(with: emailAddress!, completion: { exists in
                 if !exists {
-                    let everentUser = EverentAppUser(firstName: firstName,
-                                                  lastName: lastName,
-                                                  emailAddress: email)
-                    
+                    let everentUser = EverentAppUser(firstName: givenName!,
+                                                     lastName: familyName!,
+                                                     emailAddress: emailAddress!)
+         
                     DatabaseManager.shared.insertUser(with: everentUser, completion: { success in
                         if success {
                             
-                            guard let url = URL(string: pictureUrl) else {
+                            guard let profilePicUrlString = profilePicUrl?.absoluteString,
+                                  let url = URL(string: profilePicUrlString) else {
                                 return
                             }
-                            
+         
                             print("Downloading data from a facebook image")
-                            
+         
                             URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
                                 guard let data = data else {
                                     print("Failed to get data from facebook")
                                     return
                                 }
-                                
+         
                                 print("got data from FB, uploading...")
-                                
+         
                                 //Upload image
                                 let fileName = everentUser.profilePictureFileName
-                                StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName, completion: { result in
+                                StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName) { result in
                                     switch result {
                                     case .success(let downloadUrl):
                                         UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
@@ -376,48 +377,14 @@ class LoginViewController: UIViewController {
                                     case .failure(let error):
                                         print("Storage manager error: \(error)")
                                     }
-                                })
+                                }
                             }).resume()
                         }
                     })
                 }
             })
-     
-     //              DatabaseManager.shared.insertUser(with: everentUser, completion: { success in
-     //                  if success {
-     
-     //                      guard let url = URL(string: pictureUrl) else {
-     //                          return
-     //                      }
-         //
-         //                   print("Downloading data from a facebook image")
-         //
-         //                   URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
-         //                       guard let data = data else {
-         //                           print("Failed to get data from facebook")
-         //                           return
-         //                       }
-         //
-         //                       print("got data from FB, uploading...")
-         //
-         //                       //Upload image
-         //                       let fileName = everentUser.profilePictureFileName
-         //                       StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName, completion: { result in
-         //                           switch result {
-         //                           case .success(let downloadUrl):
-         //                               UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
-         //                               print(downloadUrl)
-         //                           case .failure(let error):
-         //                               print("Storage manager error: \(error)")
-         //                           }
-         //                       })
-         //                   }).resume()
-         //               }
-         //           })
-         //       }
-         //   })
             
-            AuthManager.shared.googleSignIn(with: idToken) { [weak self] success, error in
+            AuthManager.shared.googleSignIn(with: idToken!.tokenString) { [weak self] success, error in
                 DispatchQueue.main.async {
                     if success {
                         //User Logs In
@@ -461,7 +428,7 @@ extension LoginViewController: LoginButtonDelegate {
                 return
             }
             
-            print(result)
+            print("this: \(result)")
             
             guard let firstName = result["first_name"] as? String,
                   let lastName = result["last_name"] as? String,
