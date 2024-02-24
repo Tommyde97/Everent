@@ -321,8 +321,8 @@ class LoginViewController: UIViewController {
             self.dismiss(animated: true) {
                 // Present your main app content here
                 // For example, present a new view controller
-                let mainViewController = HomeViewController()
-                self.present(mainViewController, animated: true)
+               // let mainViewController = HomeViewController()
+               // self.present(mainViewController, animated: true)
             }
             
             let user = signInResult.user
@@ -336,9 +336,10 @@ class LoginViewController: UIViewController {
                 guard error == nil else {
                     return
                 }
-                guard let user = user else {
-                    return
-                }}
+            //    guard let user = user else {
+            //        return
+            //    }
+            }
                 let idToken = user.idToken
 
             print("Did sign in with Google: \(user)")
@@ -351,21 +352,25 @@ class LoginViewController: UIViewController {
          
                     DatabaseManager.shared.insertUser(with: everentUser, completion: { success in
                         if success {
-                            
                             guard let profilePicUrlString = profilePicUrl?.absoluteString,
                                   let url = URL(string: profilePicUrlString) else {
+                                print("Invalid profile Picture URL")
                                 return
                             }
          
-                            print("Downloading data from a facebook image")
+                            print("Downloading data from a Google image")
          
-                            URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
+                            URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
+                                if let error = error {
+                                    print("Data task error: \(error)")
+                                    return
+                                }
                                 guard let data = data else {
-                                    print("Failed to get data from facebook")
+                                    print("No Data Received")
                                     return
                                 }
          
-                                print("got data from FB, uploading...")
+                                print("Got data from Google, uploading...")
          
                                 //Upload image
                                 let fileName = everentUser.profilePictureFileName
@@ -373,7 +378,7 @@ class LoginViewController: UIViewController {
                                     switch result {
                                     case .success(let downloadUrl):
                                         UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
-                                        print(downloadUrl)
+                                        print("Received data from URL \(downloadUrl)")
                                     case .failure(let error):
                                         print("Storage manager error: \(error)")
                                     }
