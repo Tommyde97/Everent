@@ -105,8 +105,8 @@ class RegistrationViewController: UIViewController {
         passwordField.resignFirstResponder()
         
         guard let email = emailField.text, !email.isEmpty,
-                let password = passwordField.text, !password.isEmpty, password.count >= 8,
-                let username = usernameField.text, !username.isEmpty else {
+              let password = passwordField.text, !password.isEmpty, password.count >= 8,
+              let username = usernameField.text, !username.isEmpty else {
             return
         }
         
@@ -114,8 +114,18 @@ class RegistrationViewController: UIViewController {
             DispatchQueue.main.async {
                 if registered {
                     //Good to go
+                    self.dismiss(animated: true, completion: nil)
+                   // let vc = HomeViewController()
+                   // self.present(vc, animated: true)
                 } else {
-                    //Failed
+                    //Error Occurred
+                    let alert = UIAlertController(title: "Sign In Error",
+                                                  message: "We were unable to log you in",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss",
+                                                  style: .cancel,
+                                                  handler: nil))
+                    self.present(alert, animated: true)
                 }
             }
         }
