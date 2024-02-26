@@ -116,7 +116,7 @@ class RegistrationViewController: UIViewController {
                     //Good to go
                     self.dismiss(animated: true, completion: nil)
                    // let vc = HomeViewController()
-                   // self.present(vc, animated: true)
+                   // self.present(vc, animated: true )
                 } else {
                     //Error Occurred
                     let alert = UIAlertController(title: "Sign In Error",
