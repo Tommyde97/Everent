@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class RegistrationViewController: UIViewController {
     
@@ -114,9 +115,11 @@ class RegistrationViewController: UIViewController {
             DispatchQueue.main.async {
                 if registered {
                     //Good to go
-                    self.dismiss(animated: true, completion: nil)
-                   // let vc = HomeViewController()
-                   // self.present(vc, animated: true )
+                    //self.dismiss(animated: true, completion: nil)
+                    let vc = HomeViewController()
+                    let navController = UINavigationController(rootViewController: vc)
+                    navController.modalPresentationStyle = .fullScreen
+                    self.present(navController, animated: true, completion: nil)
                 } else {
                     //Error Occurred
                     let alert = UIAlertController(title: "Sign In Error",
