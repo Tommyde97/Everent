@@ -131,7 +131,6 @@ class LoginViewController: UIViewController {
         usernameEmailField.delegate = self
         passwordField.delegate = self
         facebookLoginButton.delegate = self
-        //GIDSignIn.sharedInstance.uiDelegate = self
         addSubviews()
         view.backgroundColor = .systemBackground
     }
@@ -302,7 +301,7 @@ class LoginViewController: UIViewController {
         let vc = RegistrationViewController()
         vc.title = "Create Accout"
         vc.modalPresentationStyle = .fullScreen
-        present(UINavigationController(rootViewController: vc), animated:  true)
+        present(vc, animated:  true)
     }
     
 // MARK: Google Login ------------------------------------------------------------------------------------------------------
@@ -336,9 +335,6 @@ class LoginViewController: UIViewController {
                 guard error == nil else {
                     return
                 }
-            //    guard let user = user else {
-            //        return
-            //    }
             }
                 let idToken = user.idToken
 
