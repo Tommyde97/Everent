@@ -8,13 +8,15 @@
 import UIKit
 import FirebaseAuth
 import SDWebImage
+import JGProgressHUD
 
 class RegistrationViewController: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     struct Constants {
         static let cornerRadius: CGFloat = 8.0
     }
-    
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -221,7 +223,7 @@ class RegistrationViewController: UIViewController {
             }
             
             Auth.auth().createUser(withEmail: email, password: password, completion: { authResult, error in
-                guard authResult != nil, error == nil else {
+                guard let authResult = authResult, error == nil else {
                     print ("Error creating user")
                     return
                 }
@@ -249,6 +251,15 @@ class RegistrationViewController: UIViewController {
                                 print("Storage manager error: \(error)")
                             }
                         })
+                        strongSelf.dismiss(animated: true) {
+                            
+                            let homeVC = HomeViewController()
+                            if let navController = strongSelf.navigationController {
+                                navController.pushViewController(homeVC, animated: true)
+                            } else {
+                                strongSelf.present(homeVC, animated: true)
+                            }
+                        }
                     }
                 })
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)

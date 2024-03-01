@@ -33,5 +33,6 @@ pod 'FacebookShare'
 #Other
 
 pod 'SDWebImage'
+pod 'JGProgressHUD'
 
 end
