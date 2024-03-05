@@ -252,12 +252,13 @@ class RegistrationViewController: UIViewController {
                             }
                         })
                         strongSelf.dismiss(animated: true) {
-                            
-                            let homeVC = HomeViewController()
-                            if let navController = strongSelf.navigationController {
-                                navController.pushViewController(homeVC, animated: true)
-                            } else {
-                                strongSelf.present(homeVC, animated: true)
+                            DispatchQueue.main.async {
+                                let homeVC = HomeViewController()
+                                if let navController = strongSelf.navigationController {
+                                    navController.pushViewController(homeVC, animated: true)
+                                } else {
+                                    strongSelf.present(homeVC, animated: true)
+                                }
                             }
                         }
                     }
@@ -276,15 +277,12 @@ class RegistrationViewController: UIViewController {
         }
         //Login functionality
         
-       // var username: String?
-       // var email: String?
-        
         if usernameEmail.contains("@"), usernameEmail.contains(".") {
             //email
-            let email = usernameEmail
+            
         } else {
             //username
-            let username = usernameEmail
+           
         }
         AuthManager.shared.loginUser(username: username, email: email, password: password) { success in
             DispatchQueue.main.async {
