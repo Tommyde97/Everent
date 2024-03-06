@@ -253,6 +253,8 @@ class RegistrationViewController: UIViewController {
                         })
                         strongSelf.dismiss(animated: true) {
                             DispatchQueue.main.async {
+                                let regVC = RegistrationViewController()
+                                self?.dismiss(animated: true)
                                 let homeVC = HomeViewController()
                                 if let navController = strongSelf.navigationController {
                                     navController.pushViewController(homeVC, animated: true)
