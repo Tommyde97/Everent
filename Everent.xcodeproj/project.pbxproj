@@ -34,6 +34,8 @@
 		72AAE83B2B72BF460017D217 /* PublishPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE83A2B72BF460017D217 /* PublishPostViewController.swift */; };
 		72B0D7C12B9A64E900CD605A /* ProfileTabsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B0D7C02B9A64E900CD605A /* ProfileTabsCollectionReusableView.swift */; };
 		72B0D7C32B9A650F00CD605A /* ProfileInfoHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B0D7C22B9A650F00CD605A /* ProfileInfoHeaderCollectionReusableView.swift */; };
+		72B0D7C52B9A663D00CD605A /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B0D7C42B9A663D00CD605A /* PhotoCollectionViewCell.swift */; };
+		72B0D7C72B9A666C00CD605A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B0D7C62B9A666C00CD605A /* Models.swift */; };
 		72B6EE632B73FA55001C1B87 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6EE622B73FA55001C1B87 /* DatabaseManager.swift */; };
 		72B6EE652B73FB13001C1B87 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6EE642B73FB13001C1B87 /* AuthManager.swift */; };
 		72B6EE672B73FB62001C1B87 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6EE662B73FB62001C1B87 /* StorageManager.swift */; };
@@ -71,6 +73,8 @@
 		72AAE83A2B72BF460017D217 /* PublishPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishPostViewController.swift; sourceTree = "<group>"; };
 		72B0D7C02B9A64E900CD605A /* ProfileTabsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabsCollectionReusableView.swift; sourceTree = "<group>"; };
 		72B0D7C22B9A650F00CD605A /* ProfileInfoHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		72B0D7C42B9A663D00CD605A /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		72B0D7C62B9A666C00CD605A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Models.swift; path = Everent/Views/Cells/Models.swift; sourceTree = SOURCE_ROOT; };
 		72B6EE622B73FA55001C1B87 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		72B6EE642B73FB13001C1B87 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		72B6EE662B73FB62001C1B87 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
@@ -105,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				726273C92B75820500383321 /* Home Feed */,
+				72B0D7C42B9A663D00CD605A /* PhotoCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 		72AAE8192B72BC1D0017D217 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				72B0D7C62B9A666C00CD605A /* Models.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -403,6 +409,8 @@
 				72AAE8042B72BBAF0017D217 /* AppDelegate.swift in Sources */,
 				72AAE8062B72BBAF0017D217 /* SceneDelegate.swift in Sources */,
 				72AAE8332B72BE610017D217 /* ListViewController.swift in Sources */,
+				72B0D7C52B9A663D00CD605A /* PhotoCollectionViewCell.swift in Sources */,
+				72B0D7C72B9A666C00CD605A /* Models.swift in Sources */,
 				72AAE8312B72BE4E0017D217 /* SettingsViewController.swift in Sources */,
 				726273CB2B75822D00383321 /* FeedPostHeaderTableViewCell.swift in Sources */,
 			);

@@ -12,6 +12,8 @@ final class ProfileViewController: UIViewController {
     
     private var collectionView: UICollectionView?
     
+    private var userPosts = [UserPost]()
+    
     struct Constants {
         static let cornerRadius: CGFloat = 8.0
     }
@@ -48,8 +50,8 @@ final class ProfileViewController: UIViewController {
                                           collectionViewLayout: layout)
         
         //Cell
-    //   collectionView?.register(PhotoCollectionViewCell.self,
-    //                            forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
+        collectionView?.register(PhotoCollectionViewCell.self,
+                                 forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
         
         //Headers
         collectionView?.register(ProfileInfoHeaderCollectionReusableView.self,
@@ -72,7 +74,7 @@ final class ProfileViewController: UIViewController {
         
         collectionView?.frame = view.bounds
         
-        profileImage.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/3.0)
+        //profileImage.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/3.0)
     }
     private func configureNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"),
@@ -90,16 +92,53 @@ final class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        if section == 0 {
+            return 0
+        }
+        //Return the number of Posts the user has
+        return 30
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        let model = userPosts[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier,
+                                                      for: indexPath) as! PhotoCollectionViewCell
+        cell.configure(with: model)
+        cell.configure(debug: "test")
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        //Get the model and open opst Controller
+        let modelk = userPosts[indexPath.row]
+        let user = User(username: "Joe",
+                        bio: "Hi I am Joe",
+                        name: (first: " ", last: " "),
+                        profilePhoto: URL(string: "https://www.google.com")!,
+                        birthDate: Date(),
+                        gender: .male,
+                        counts: UserCount(followers: 100, following: 199, posts: 10),
+                        joinDate: Date())
+        let post = UserPost(indentifier: "",
+                            postType: .photo,
+                            thumbnailImage: URL( string: "https://www.google.com")!,
+                            postURL: URL( string: "https://www.google.com")!,
+                            caption: nil,
+                            likeCount: [],
+                            comments: [],
+                            createdDate: Date(),
+                            taggedUsers: [],
+                            owner: user)
+       // let vc = PostViewController(model: post)
+       // vc.title = post.postType.rawValue
+       // vc.navigationItem.largeTitleDisplayMode = .never
+       // navigationController?.pushViewController(vc, animated: true)
     }
     
     
