@@ -32,6 +32,8 @@
 		72AAE8372B72BE880017D217 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8362B72BE880017D217 /* SearchResultViewController.swift */; };
 		72AAE8392B72BEA60017D217 /* PostEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE8382B72BEA60017D217 /* PostEditorViewController.swift */; };
 		72AAE83B2B72BF460017D217 /* PublishPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AAE83A2B72BF460017D217 /* PublishPostViewController.swift */; };
+		72B0D7C12B9A64E900CD605A /* ProfileTabsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B0D7C02B9A64E900CD605A /* ProfileTabsCollectionReusableView.swift */; };
+		72B0D7C32B9A650F00CD605A /* ProfileInfoHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B0D7C22B9A650F00CD605A /* ProfileInfoHeaderCollectionReusableView.swift */; };
 		72B6EE632B73FA55001C1B87 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6EE622B73FA55001C1B87 /* DatabaseManager.swift */; };
 		72B6EE652B73FB13001C1B87 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6EE642B73FB13001C1B87 /* AuthManager.swift */; };
 		72B6EE672B73FB62001C1B87 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B6EE662B73FB62001C1B87 /* StorageManager.swift */; };
@@ -67,6 +69,8 @@
 		72AAE8362B72BE880017D217 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		72AAE8382B72BEA60017D217 /* PostEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEditorViewController.swift; sourceTree = "<group>"; };
 		72AAE83A2B72BF460017D217 /* PublishPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishPostViewController.swift; sourceTree = "<group>"; };
+		72B0D7C02B9A64E900CD605A /* ProfileTabsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabsCollectionReusableView.swift; sourceTree = "<group>"; };
+		72B0D7C22B9A650F00CD605A /* ProfileInfoHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		72B6EE622B73FA55001C1B87 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		72B6EE642B73FB13001C1B87 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		72B6EE662B73FB62001C1B87 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 		72AAE8172B72BC0A0017D217 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				72B0D7BF2B9A64A700CD605A /* CollectionView Headers */,
 				726273C62B757E8C00383321 /* Cells */,
 				72AAE80C2B72BBB00017D217 /* Assets.xcassets */,
 				72AAE81B2B72BC7E0017D217 /* Storyboards */,
@@ -223,6 +228,15 @@
 				72AAE82A2B72BDFC0017D217 /* RegistrationViewController.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		72B0D7BF2B9A64A700CD605A /* CollectionView Headers */ = {
+			isa = PBXGroup;
+			children = (
+				72B0D7C22B9A650F00CD605A /* ProfileInfoHeaderCollectionReusableView.swift */,
+				72B0D7C02B9A64E900CD605A /* ProfileTabsCollectionReusableView.swift */,
+			);
+			path = "CollectionView Headers";
 			sourceTree = "<group>";
 		};
 		72B6EE612B73F99C001C1B87 /* General */ = {
@@ -366,6 +380,7 @@
 			files = (
 				72AAE82F2B72BE3D0017D217 /* EditProfileViewController.swift in Sources */,
 				72AAE81D2B72BD2E0017D217 /* ExploreViewController.swift in Sources */,
+				72B0D7C32B9A650F00CD605A /* ProfileInfoHeaderCollectionReusableView.swift in Sources */,
 				72AAE83B2B72BF460017D217 /* PublishPostViewController.swift in Sources */,
 				72AAE81F2B72BD450017D217 /* CameraViewController.swift in Sources */,
 				72AAE8082B72BBAF0017D217 /* HomeViewController.swift in Sources */,
@@ -377,6 +392,7 @@
 				72B6EE632B73FA55001C1B87 /* DatabaseManager.swift in Sources */,
 				72AAE8212B72BD540017D217 /* NotificationsViewController.swift in Sources */,
 				72AAE8372B72BE880017D217 /* SearchResultViewController.swift in Sources */,
+				72B0D7C12B9A64E900CD605A /* ProfileTabsCollectionReusableView.swift in Sources */,
 				72AAE8282B72BDE20017D217 /* LoginViewController.swift in Sources */,
 				72B6EE692B740F15001C1B87 /* Extensions.swift in Sources */,
 				726273CD2B75824300383321 /* FeedPostActionsTableViewCell.swift in Sources */,

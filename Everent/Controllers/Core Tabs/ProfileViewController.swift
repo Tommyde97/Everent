@@ -11,18 +11,53 @@ import UIKit
 final class ProfileViewController: UIViewController {
     
     private var collectionView: UICollectionView?
+    
+    struct Constants {
+        static let cornerRadius: CGFloat = 8.0
+    }
+    
+    private let profileImage: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        image.backgroundColor = .white
+        image.layer.borderColor = UIColor.black.cgColor
+        image.layer.borderWidth = 3
+        image.layer.masksToBounds = true
+        image.layer.cornerRadius = Constants.cornerRadius
+        return image
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureNavigationBar()
         
+       // profileImage.addTarget(self,
+       //                        action: #selector(didTapProfileImage),
+       //                        for: .touchUpInside)
+        
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: view.width/3, height: view.width/3)
+        let size = (view.width - 4)/3
+        layout.itemSize = CGSize(width: size, height: size)
         collectionView = UICollectionView(frame: .zero,
                                           collectionViewLayout: layout)
+        
+        //Cell
+    //   collectionView?.register(PhotoCollectionViewCell.self,
+    //                            forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
+        
+        //Headers
+        collectionView?.register(ProfileInfoHeaderCollectionReusableView.self,
+                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                 withReuseIdentifier: ProfileInfoHeaderCollectionReusableView.identifier)
+        collectionView?.register(ProfileTabsCollectionReusableView.self,
+                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                 withReuseIdentifier: ProfileTabsCollectionReusableView.identifier)
         
         collectionView?.delegate = self
         collectionView?.dataSource = self
@@ -34,7 +69,10 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         collectionView?.frame = view.bounds
+        
+        profileImage.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height/3.0)
     }
     private func configureNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"),
