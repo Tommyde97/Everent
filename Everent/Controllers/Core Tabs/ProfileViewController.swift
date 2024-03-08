@@ -135,6 +135,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
                             createdDate: Date(),
                             taggedUsers: [],
                             owner: user)
+//Insert profile changess
        // let vc = PostViewController(model: post)
        // vc.title = post.postType.rawValue
        // vc.navigationItem.largeTitleDisplayMode = .never
