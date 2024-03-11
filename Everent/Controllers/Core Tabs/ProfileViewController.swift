@@ -105,10 +105,10 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let model = userPosts[indexPath.row]
+        //let model = userPosts[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier,
                                                       for: indexPath) as! PhotoCollectionViewCell
-        cell.configure(with: model)
+        //cell.configure(with: model)
         cell.configure(debug: "test")
         return cell
     }
@@ -116,7 +116,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         //Get the model and open opst Controller
-        let modelk = userPosts[indexPath.row]
+        //let model = userPosts[indexPath.row]
         let user = User(username: "Joe",
                         bio: "Hi I am Joe",
                         name: (first: " ", last: " "),
