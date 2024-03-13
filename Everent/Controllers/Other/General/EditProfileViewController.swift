@@ -7,6 +7,13 @@
 
 import UIKit
 
+struct EditProfileFormModel {
+    let label: String
+    let placeholder: String
+    var value: String?
+}
+
+
 class EditProfileViewController: UIViewController {
 
     override func viewDidLoad() {
