@@ -188,6 +188,7 @@ class RegistrationViewController: UIViewController {
         passwordField.resignFirstResponder()
         firstNameField.resignFirstResponder()
         lastNameField.resignFirstResponder()
+        usernameField.resignFirstResponder()
         
         
         guard let username = usernameField.text,
@@ -201,33 +202,41 @@ class RegistrationViewController: UIViewController {
               !firstName.isEmpty,
               !lastName.isEmpty,
               password.count >= 6 else {
+            alertUserRegistrationError(message: "Please fill in all fields to create an account.")
             return
         }
         
+        spinner.show(in: view)
         
         // Firebase Log In
         
+        // Check if user already exists
         DatabaseManager.shared.userExists(with: email, completion: { [weak self] exists in
             guard let strongSelf = self else {
                 return
             }
             
             DispatchQueue.main.async {
-              //  strongSelf.spinner.dismiss()
+                strongSelf.spinner.dismiss()
             }
             
             guard !exists else {
                 // User already exists
-                //strongSelf.alertUserLoginError(message: "Looks like a user account for that email address already exists")
+                strongSelf.alertUserRegistrationError(message: "Looks like a user account for that email address already exists")
                 return
             }
             
+            // Create user in Firebase
             Auth.auth().createUser(withEmail: email, password: password, completion: { authResult, error in
-                guard let authResult = authResult, error == nil else {
-                    print ("Error creating user")
+                guard let result = authResult, error == nil else {
+                    DispatchQueue.main.async {
+                        strongSelf.alertUserRegistrationError(message: "Error creating user.")
+                    }
+                    //print ("Error creating user")
                     return
                 }
                 
+                let user = result.user
                 UserDefaults.standard.setValue(email, forKey: "email")
                 UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
                 
@@ -251,59 +260,81 @@ class RegistrationViewController: UIViewController {
                                 print("Storage manager error: \(error)")
                             }
                         })
-                        strongSelf.dismiss(animated: true) {
-                            DispatchQueue.main.async {
-                                let regVC = RegistrationViewController()
-                                self?.dismiss(animated: true)
-                                let homeVC = HomeViewController()
-                                if let navController = strongSelf.navigationController {
-                                    navController.pushViewController(homeVC, animated: true)
-                                } else {
-                                    strongSelf.present(homeVC, animated: true)
-                                }
-                            }
-                        }
+                //       strongSelf.dismiss(animated: true) {
+                //           DispatchQueue.main.async {
+                //               let regVC = RegistrationViewController()
+                //               self?.dismiss(animated: true)
+                //               let homeVC = HomeViewController()
+                //               if let navController = strongSelf.navigationController {
+                //                   navController.pushViewController(homeVC, animated: true)
+                //               } else {
+                //                   strongSelf.present(homeVC, animated: true)
+                //               }
+                //           }
+                //       }
                     }
                 })
-                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                
+                // Log in the user
+                
+                AuthManager.shared.loginUser(username: username, email: email, password: password) { success in
+                    DispatchQueue.main.async {
+                        strongSelf.spinner.dismiss()
+                        if success {
+                            //User Logs In
+                            strongSelf.navigateToHome()
+                        } else {
+                            //Error Occurred
+                            let alert = UIAlertController(title: "Log in Error",
+                                                          message: "We were unable to log you in",
+                                                          preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Dismiss",
+                                                          style: .cancel,
+                                                          handler: nil))
+                            strongSelf.present(alert, animated: true)
+                        }
+                    }
+                }
+                
+               // strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             })
         })
         
         
-        passwordField.resignFirstResponder()
-        emailField.resignFirstResponder()
-        
-        guard let usernameEmail = emailField.text, !usernameEmail.isEmpty,
-              let password = passwordField.text, !password.isEmpty, password.count >= 8 else {
-            return
-        }
-        //Login functionality
-        
-        if usernameEmail.contains("@"), usernameEmail.contains(".") {
-            //email
-            
-        } else {
-            //username
-           
-        }
-        AuthManager.shared.loginUser(username: username, email: email, password: password) { success in
-            DispatchQueue.main.async {
-                if success {
-                    //User Logs In
-                    self.dismiss(animated: true, completion: nil)
-                    print("Logged Innnn")
-                }else {
-                    //Error Occurred
-                    let alert = UIAlertController(title: "Log in Error",
-                                                  message: "We were unable to log you in",
-                                                  preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Dismiss",
-                                                  style: .cancel,
-                                                  handler: nil))
-                    self.present(alert, animated: true)
-                }
-            }
-        }
+   //    passwordField.resignFirstResponder()
+   //    emailField.resignFirstResponder()
+   //
+   //    guard let usernameEmail = emailField.text, !usernameEmail.isEmpty,
+   //          let password = passwordField.text, !password.isEmpty, password.count >= 8 else {
+   //        return
+   //    }
+   //    //Login functionality
+   //
+   //    if usernameEmail.contains("@"), usernameEmail.contains(".") {
+   //        //email
+   //
+   //    } else {
+   //        //username
+   //
+   //    }
+       
+    }
+    
+    private func alertUserRegistrationError(message: String) {
+        let alert = UIAlertController(title: "Woops", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
+    
+    private func navigateToHome() {
+        // Assuming HomeViewController is your home screen controller
+           let homeVC = HomeViewController()
+           if let navController = self.navigationController {
+               navController.pushViewController(homeVC, animated: true)
+           } else {
+               homeVC.modalPresentationStyle = .fullScreen
+               self.present(homeVC, animated: true, completion: nil)
+           }
     }
 }
 
